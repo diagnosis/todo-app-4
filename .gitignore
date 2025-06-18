@@ -12,6 +12,7 @@ vendor/
 
 # Ignore IDE and editor files
 .idea/
+.idea
 *.swp
 *.swo
 *~
