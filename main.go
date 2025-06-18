@@ -24,22 +24,15 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Println("Connected to PostgreSQL!")
-
 	todoRepo := repository.NewTodoRepository(db)
 	todoService := services.NewTodoService(todoRepo)
 	todoHandler := handlers.NewTodoHandler(todoService)
 
-	r := routes.SetRouter()
-
-	// Enable CORS
+	r := routes.SetRouter(todoHandler)
 	handler := cors.Default().Handler(r)
-	// Or customize: cors.New(cors.Options{
-	//     AllowedOrigins: []string{"http://localhost:5173"},
-	//     AllowedMethods: []string{"GET", "POST", "PUT", "DELETE"},
-	// }).Handler(r)
-
 	log.Println("Starting server on :8080")
 	if err := http.ListenAndServe(":8080", handler); err != nil {
 		log.Fatal(err)
 	}
+
 }
