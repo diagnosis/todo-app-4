@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	_ "github.com/lib/pq"
+	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"todo-app-4/handlers"
@@ -23,15 +24,22 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Println("Connected to PostgreSQL!")
+
 	todoRepo := repository.NewTodoRepository(db)
 	todoService := services.NewTodoService(todoRepo)
 	todoHandler := handlers.NewTodoHandler(todoService)
 
-	r := routes.SetRouter(todoHandler)
+	r := routes.SetRouter()
+
+	// Enable CORS
+	handler := cors.Default().Handler(r)
+	// Or customize: cors.New(cors.Options{
+	//     AllowedOrigins: []string{"http://localhost:5173"},
+	//     AllowedMethods: []string{"GET", "POST", "PUT", "DELETE"},
+	// }).Handler(r)
 
 	log.Println("Starting server on :8080")
-	if err := http.ListenAndServe(":8080", r); err != nil {
+	if err := http.ListenAndServe(":8080", handler); err != nil {
 		log.Fatal(err)
 	}
-
 }
