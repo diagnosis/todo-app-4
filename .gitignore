@@ -1,0 +1,31 @@
+# Ignore Go build artifacts
+bin/
+*.exe
+*.test
+
+# Ignore Go module cache
+vendor/
+
+# Ignore local environment files
+.env
+*.env
+
+# Ignore IDE and editor files
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore Docker ignored files (if not managed in repo)
+docker-compose.override.yml
+Dockerfile.local
+
+# Ignore database files (if any local DB files are generated)
+*.db
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore macOS-specific files
+.DS_Store
