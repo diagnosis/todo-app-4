@@ -38,7 +38,7 @@ func main() {
 
 	r := routes.SetRouter(todoHandler)
 	corsHandler := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:5173", "https://your-vercel-url"}, // Add your Vercel URL later
+		AllowedOrigins:   []string{"http://localhost:5173", "*"}, // Add your Vercel URL later
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
