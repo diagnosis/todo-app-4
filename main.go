@@ -37,9 +37,14 @@ func main() {
 	todoHandler := handlers.NewTodoHandler(todoService)
 
 	r := routes.SetRouter(todoHandler)
-	handler := cors.Default().Handler(r)
+	corsHandler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:5173", "https://your-vercel-url"}, // Add your Vercel URL later
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+	}).Handler(r)
 	log.Println("Starting server on :8080")
-	if err := http.ListenAndServe(":8080", handler); err != nil {
+	if err := http.ListenAndServe(":8080", corsHandler); err != nil {
 		log.Fatal(err)
 	}
 }
